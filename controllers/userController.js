@@ -44,6 +44,16 @@ exports.register = async (req, res, next) => {
     next(); // pass to authController.login
 };
 
+exports.isRegistrationOpen = (req, res, next) => {
+    const isOpen = process.env.REGISTER;
+    if (isOpen) {
+        req.flash('info', `Registration is currently disabled.`);
+        res.redirect(`/`);
+        return;
+    }
+    next();
+};
+
 exports.account = (req, res) => {
     res.render('account', { title: 'Edit your Account' });
 };
