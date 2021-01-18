@@ -46,7 +46,9 @@ exports.register = async (req, res, next) => {
 
 exports.isRegistrationOpen = (req, res, next) => {
     const isOpen = process.env.REGISTER;
-    if (isOpen) {
+
+    // There's probably a better way to do this. Checks if the env variable has a string of FALSE to disable.
+    if (isOpen === 'FALSE') {
         req.flash('info', `Registration is currently disabled.`);
         res.redirect(`/`);
         return;
